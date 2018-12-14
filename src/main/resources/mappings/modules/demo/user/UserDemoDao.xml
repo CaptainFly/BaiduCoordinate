@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jxtii.oa.modules.demo.dao.user.UserDemoDao">
+    
+	<sql id="userDemoColumns">
+		a.id AS "id",
+		a.company_id AS "company.id",
+		a.office_id AS "office.id",
+		a.login_name AS "loginName",
+		a.name AS "name",
+		a.email AS "email",
+		a.mobile AS "mobile",
+		a.photo AS "photo",
+		a.create_by AS "createBy.id",
+		a.create_date AS "createDate",
+		a.update_by AS "updateBy.id",
+		a.update_date AS "updateDate",
+		a.remarks AS "remarks",
+		a.del_flag AS "delFlag",
+		a.sex AS "sex",
+		o3.name AS "office.name",
+		o4.name as "company.name"
+	</sql>
+	
+	<sql id="userDemoJoins">
+			LEFT JOIN sys_office o3 ON o3.id = a.office_id
+			LEFT JOIN sys_office o4 ON o4.id = a.company_id
+	</sql>
+    
+	<select id="get" resultType="UserDemo">
+		SELECT 
+			<include refid="userDemoColumns"/>
+		FROM t_user_demo a
+		<include refid="userDemoJoins"/>
+		WHERE a.id = #{id}
+	</select>
+
+	<select id="getByLoginName" resultType="UserDemo">
+		select * from t_user_demo t where t.login_name = #{loginName}
+	</select>
+	
+	<select id="findList" resultType="UserDemo">
+		SELECT 
+			<include refid="userDemoColumns"/>
+		FROM t_user_demo a
+		<include refid="userDemoJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			<if test="company != null and company.id != null and company.id != ''">
+				AND a.company_id = #{company.id}
+			</if>
+			<if test="office != null and office.id != null and office.id != ''">
+				AND a.office_id = #{office.id}
+			</if>
+			<if test="name != null and name != ''">
+				AND a.name LIKE 
+					<if test="dbName == 'oracle'">'%'||#{name}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{name}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{name},'%')</if>
+			</if>
+			<if test="beginCreateDate != null and endCreateDate != null and beginCreateDate != '' and endCreateDate != ''">
+				AND a.create_date BETWEEN #{beginCreateDate} AND #{endCreateDate}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="UserDemo">
+		SELECT 
+			<include refid="userDemoColumns"/>
+		FROM t_user_demo a
+		<include refid="userDemoJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO t_user_demo(
+			id,
+			company_id,
+			office_id,
+			login_name,
+			name,
+			email,
+			mobile,
+			photo,
+			create_by,
+			create_date,
+			update_by,
+			update_date,
+			remarks,
+			del_flag,
+			sex
+		) VALUES (
+			#{id},
+			#{company.id},
+			#{office.id},
+			#{loginName},
+			#{name},
+			#{email},
+			#{mobile},
+			#{photo},
+			#{createBy.id},
+			#{createDate},
+			#{updateBy.id},
+			#{updateDate},
+			#{remarks},
+			#{delFlag},
+			#{sex}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE t_user_demo SET 	
+			company_id = #{company.id},
+			office_id = #{office.id},
+			login_name = #{loginName},
+			name = #{name},
+			email = #{email},
+			mobile = #{mobile},
+			photo = #{photo},
+			update_by = #{updateBy.id},
+			update_date = #{updateDate},
+			remarks = #{remarks},
+			sex = #{sex}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		UPDATE t_user_demo SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		WHERE id = #{id}
+	</update>
+	
+</mapper>
