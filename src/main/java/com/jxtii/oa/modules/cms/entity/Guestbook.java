@@ -112,11 +112,13 @@ public class Guestbook extends DataEntity<Guestbook> {
         this.ip = ip;
     }
 
+    @Override
     @NotNull
     public Date getCreateDate() {
         return createDate;
     }
 
+    @Override
     public void setCreateDate(Date createDate) {
         this.createDate = createDate;
     }
@@ -145,11 +147,13 @@ public class Guestbook extends DataEntity<Guestbook> {
         this.reDate = reDate;
     }
 
+    @Override
     @Length(min = 1, max = 1)
     public String getDelFlag() {
         return delFlag;
     }
 
+    @Override
     public void setDelFlag(String delFlag) {
         this.delFlag = delFlag;
     }

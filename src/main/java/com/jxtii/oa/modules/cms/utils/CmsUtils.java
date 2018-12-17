@@ -269,7 +269,9 @@ public class CmsUtils {
      * @return src
      */
     public static String formatImageSrcToDb(String src) {
-        if (StringUtils.isBlank(src)) return src;
+        if (StringUtils.isBlank(src)) {
+        	return src;
+        }
         if (src.startsWith(context.getContextPath() + "/userfiles")) {
             return src.substring(context.getContextPath().length());
         } else {
@@ -284,7 +286,9 @@ public class CmsUtils {
      * @return src
      */
     public static String formatImageSrcToWeb(String src) {
-        if (StringUtils.isBlank(src)) return src;
+        if (StringUtils.isBlank(src)) {
+        	return src;
+        }
         if (src.startsWith(context.getContextPath() + "/userfiles")) {
             return src;
         } else {

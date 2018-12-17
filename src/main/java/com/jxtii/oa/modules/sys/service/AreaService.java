@@ -19,20 +19,22 @@ import java.util.List;
  * @version 2014-05-16
  */
 @Service
-@Transactional(readOnly = true)
+@Transactional(readOnly = true,rollbackFor = Exception.class)
 public class AreaService extends TreeService<AreaDao, Area> {
 
     public List<Area> findAll() {
         return UserUtils.getAreaList();
     }
 
-    @Transactional(readOnly = false)
+    @Override
+    @Transactional(readOnly = false,rollbackFor = Exception.class)
     public void save(Area area) {
         super.save(area);
         UserUtils.removeCache(UserUtils.CACHE_AREA_LIST);
     }
 
-    @Transactional(readOnly = false)
+    @Override
+    @Transactional(readOnly = false,rollbackFor = Exception.class)
     public void delete(Area area) {
         super.delete(area);
         UserUtils.removeCache(UserUtils.CACHE_AREA_LIST);

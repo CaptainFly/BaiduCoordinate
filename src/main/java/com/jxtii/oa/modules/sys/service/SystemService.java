@@ -139,7 +139,7 @@ public class SystemService extends BaseService implements InitializingBean {
         return list;
     }
 
-    @Transactional(readOnly = false)
+    @Transactional(readOnly = false,rollbackFor = Exception.class)
     public void saveUser(User user) {
         if (StringUtils.isBlank(user.getId())) {
             user.preInsert();
@@ -171,7 +171,7 @@ public class SystemService extends BaseService implements InitializingBean {
         }
     }
 
-    @Transactional(readOnly = false)
+    @Transactional(readOnly = false,rollbackFor = Exception.class)
     public void updateUserInfo(User user) {
         user.preUpdate();
         userDao.updateUserInfo(user);
@@ -181,7 +181,7 @@ public class SystemService extends BaseService implements InitializingBean {
 //		systemRealm.clearAllCachedAuthorizationInfo();
     }
 
-    @Transactional(readOnly = false)
+    @Transactional(readOnly = false,rollbackFor = Exception.class)
     public void deleteUser(User user) {
         userDao.delete(user);
         // 同步到Activiti
@@ -192,7 +192,7 @@ public class SystemService extends BaseService implements InitializingBean {
 //		systemRealm.clearAllCachedAuthorizationInfo();
     }
 
-    @Transactional(readOnly = false)
+    @Transactional(readOnly = false,rollbackFor = Exception.class)
     public void updatePasswordById(String id, String loginName, String newPassword) {
         User user = new User(id);
         user.setPassword(entryptPassword(newPassword));
@@ -208,7 +208,7 @@ public class SystemService extends BaseService implements InitializingBean {
         JedisUtils.del(tokenKey);
     }
 
-    @Transactional(readOnly = false)
+    @Transactional(readOnly = false,rollbackFor = Exception.class)
     public void updateUserLoginInfo(User user) {
         // 保存上次登录信息
         user.setOldLoginIp(user.getLoginIp());
@@ -283,7 +283,7 @@ public class SystemService extends BaseService implements InitializingBean {
         return UserUtils.getAllRoleList();
     }
 
-    @Transactional(readOnly = false)
+    @Transactional(readOnly = false,rollbackFor = Exception.class)
     public void saveRole(Role role) {
         if (StringUtils.isBlank(role.getId())) {
             role.preInsert();
@@ -312,7 +312,7 @@ public class SystemService extends BaseService implements InitializingBean {
 //		systemRealm.clearAllCachedAuthorizationInfo();
     }
 
-    @Transactional(readOnly = false)
+    @Transactional(readOnly = false,rollbackFor = Exception.class)
     public void deleteRole(Role role) {
         roleDao.delete(role);
         // 同步到Activiti
@@ -323,7 +323,7 @@ public class SystemService extends BaseService implements InitializingBean {
 //		systemRealm.clearAllCachedAuthorizationInfo();
     }
 
-    @Transactional(readOnly = false)
+    @Transactional(readOnly = false,rollbackFor = Exception.class)
     public Boolean outUserInRole(Role role, User user) {
         List<Role> roles = user.getRoleList();
         for (Role e : roles) {
@@ -336,7 +336,7 @@ public class SystemService extends BaseService implements InitializingBean {
         return false;
     }
 
-    @Transactional(readOnly = false)
+    @Transactional(readOnly = false,rollbackFor = Exception.class)
     public User assignUserToRole(Role role, User user) {
         if (user == null) {
             return null;
@@ -360,7 +360,7 @@ public class SystemService extends BaseService implements InitializingBean {
         return UserUtils.getMenuList();
     }
 
-    @Transactional(readOnly = false)
+    @Transactional(readOnly = false,rollbackFor = Exception.class)
     public void saveMenu(Menu menu) {
 
         // 获取父节点实体
@@ -397,7 +397,7 @@ public class SystemService extends BaseService implements InitializingBean {
         CacheUtils.remove(LogUtils.CACHE_MENU_NAME_PATH_MAP);
     }
 
-    @Transactional(readOnly = false)
+    @Transactional(readOnly = false,rollbackFor = Exception.class)
     public void updateMenuSort(Menu menu) {
         menuDao.updateSort(menu);
         // 清除用户菜单缓存
@@ -408,7 +408,7 @@ public class SystemService extends BaseService implements InitializingBean {
         CacheUtils.remove(LogUtils.CACHE_MENU_NAME_PATH_MAP);
     }
 
-    @Transactional(readOnly = false)
+    @Transactional(readOnly = false,rollbackFor = Exception.class)
     public void deleteMenu(Menu menu) {
         menuDao.delete(menu);
         // 清除用户菜单缓存
@@ -440,6 +440,7 @@ public class SystemService extends BaseService implements InitializingBean {
      */
     private static boolean isSynActivitiIndetity = true;
 
+    @Override
     public void afterPropertiesSet() throws Exception {
         if (!Global.isSynActivitiIndetity()) {
             return;
@@ -494,7 +495,8 @@ public class SystemService extends BaseService implements InitializingBean {
         // 创建用户与用户组关系
         List<User> userList = findUser(new User(new Role(role.getId())));
         for (User e : userList) {
-            String userId = e.getLoginName();//ObjectUtils.toString(user.getId());
+        	//ObjectUtils.toString(user.getId());
+            String userId = e.getLoginName();
             // 如果该用户不存在，则创建一个
             org.activiti.engine.identity.User activitiUser = identityService.createUserQuery().userId(userId).singleResult();
             if (activitiUser == null) {
@@ -523,7 +525,8 @@ public class SystemService extends BaseService implements InitializingBean {
         if (!Global.isSynActivitiIndetity()) {
             return;
         }
-        String userId = user.getLoginName();//ObjectUtils.toString(user.getId());
+        //ObjectUtils.toString(user.getId());
+        String userId = user.getLoginName();
         org.activiti.engine.identity.User activitiUser = identityService.createUserQuery().userId(userId).singleResult();
         if (activitiUser == null) {
             activitiUser = identityService.newUser(userId);
@@ -559,7 +562,8 @@ public class SystemService extends BaseService implements InitializingBean {
             return;
         }
         if (user != null) {
-            String userId = user.getLoginName();//ObjectUtils.toString(user.getId());
+        	//ObjectUtils.toString(user.getId());
+            String userId = user.getLoginName();
             identityService.deleteUser(userId);
         }
     }

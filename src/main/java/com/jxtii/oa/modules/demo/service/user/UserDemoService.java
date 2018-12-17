@@ -16,16 +16,17 @@ import com.jxtii.oa.modules.demo.dao.user.UserDemoDao;
 
 /**
  * 用户管理Service
- * @author glf
- * @version 2017-07-07
+ * @author Fly
+ * @version 2018-12-17
  */
 @Service
-@Transactional(readOnly = true)
+@Transactional(readOnly = true,rollbackFor = Exception.class)
 public class UserDemoService extends CrudService<UserDemoDao, UserDemo> {
 
 	@Autowired
 	private UserDemoDao demoDao;
 
+	@Override
 	public UserDemo get(String id) {
 		return super.get(id);
 	}
@@ -39,20 +40,24 @@ public class UserDemoService extends CrudService<UserDemoDao, UserDemo> {
 		return demoDao.getByLoginName(loginName);
 	}
 	
+	@Override
 	public List<UserDemo> findList(UserDemo userDemo) {
 		return super.findList(userDemo);
 	}
 	
+	@Override
 	public Page<UserDemo> findPage(Page<UserDemo> page, UserDemo userDemo) {
 		return super.findPage(page, userDemo);
 	}
 	
-	@Transactional(readOnly = false)
+	@Override
+	@Transactional(readOnly = false,rollbackFor = Exception.class)
 	public void save(UserDemo userDemo) {
 		super.save(userDemo);
 	}
 	
-	@Transactional(readOnly = false)
+	@Override
+	@Transactional(readOnly = false,rollbackFor = Exception.class)
 	public void delete(UserDemo userDemo) {
 		super.delete(userDemo);
 	}

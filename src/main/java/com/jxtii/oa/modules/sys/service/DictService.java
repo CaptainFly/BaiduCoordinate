@@ -32,13 +32,15 @@ public class DictService extends CrudService<DictDao, Dict> {
         return dao.findTypeList(new Dict());
     }
 
-    @Transactional(readOnly = false)
+    @Override
+    @Transactional(readOnly = false,rollbackFor = Exception.class)
     public void save(Dict dict) {
         super.save(dict);
         CacheUtils.remove(DictUtils.CACHE_DICT_MAP);
     }
 
-    @Transactional(readOnly = false)
+    @Override
+    @Transactional(readOnly = false,rollbackFor = Exception.class)
     public void delete(Dict dict) {
         super.delete(dict);
         CacheUtils.remove(DictUtils.CACHE_DICT_MAP);

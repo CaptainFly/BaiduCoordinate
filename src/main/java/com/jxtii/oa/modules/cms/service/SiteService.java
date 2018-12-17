@@ -19,9 +19,10 @@ import org.springframework.transaction.annotation.Transactional;
  * @version 2013-01-15
  */
 @Service
-@Transactional(readOnly = true)
+@Transactional(readOnly = true, rollbackFor = Exception.class)
 public class SiteService extends CrudService<SiteDao, Site> {
 
+	@Override
     public Page<Site> findPage(Page<Site> page, Site site) {
 //		DetachedCriteria dc = siteDao.createDetachedCriteria();
 //		if (StringUtils.isNotEmpty(site.getName())){
@@ -36,7 +37,8 @@ public class SiteService extends CrudService<SiteDao, Site> {
         return super.findPage(page, site);
     }
 
-    @Transactional(readOnly = false)
+	@Override
+    @Transactional(readOnly = false, rollbackFor = Exception.class)
     public void save(Site site) {
         if (site.getCopyright() != null) {
             site.setCopyright(StringEscapeUtils.unescapeHtml4(site.getCopyright()));
@@ -46,7 +48,7 @@ public class SiteService extends CrudService<SiteDao, Site> {
         CmsUtils.removeCache("siteList");
     }
 
-    @Transactional(readOnly = false)
+    @Transactional(readOnly = false, rollbackFor = Exception.class)
     public void delete(Site site, Boolean isRe) {
         //siteDao.updateDelFlag(id, isRe!=null&&isRe?Site.DEL_FLAG_NORMAL:Site.DEL_FLAG_DELETE);
         site.setDelFlag(isRe != null && isRe ? Site.DEL_FLAG_NORMAL : Site.DEL_FLAG_DELETE);

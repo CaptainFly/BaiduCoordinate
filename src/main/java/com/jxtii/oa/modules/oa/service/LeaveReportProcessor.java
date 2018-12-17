@@ -31,6 +31,7 @@ public class LeaveReportProcessor implements TaskListener {
     /**
      * 销假完成后执行，保存实际开始和结束时间
      */
+    @Override
     public void notify(DelegateTask delegateTask) {
         String processInstanceId = delegateTask.getProcessInstanceId();
         ProcessInstance processInstance = runtimeService.createProcessInstanceQuery().processInstanceId(processInstanceId).singleResult();

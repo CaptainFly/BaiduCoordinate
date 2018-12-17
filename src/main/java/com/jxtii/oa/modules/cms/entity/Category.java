@@ -100,11 +100,13 @@ public class Category extends TreeEntity<Category> {
     }
 
     //	@JsonBackReference
-//	@NotNull
+    //	@NotNull
+    @Override
     public Category getParent() {
         return parent;
     }
 
+    @Override
     public void setParent(Category parent) {
         this.parent = parent;
     }

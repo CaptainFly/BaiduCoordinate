@@ -7,6 +7,11 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * 
+ * @author Fly
+ *
+ */
 public class SimpleRuntimeActivityDefinitionEntity implements RuntimeActivityDefinitionEntity {
     String _factoryName;
 
@@ -20,18 +25,22 @@ public class SimpleRuntimeActivityDefinitionEntity implements RuntimeActivityDef
         _properties = properties;
     }
 
+    @Override
     public void setFactoryName(String factoryName) {
         _factoryName = factoryName;
     }
 
+    @Override
     public void setProcessDefinitionId(String processDefinitionId) {
         _processDefinitionId = processDefinitionId;
     }
 
+    @Override
     public void setProcessInstanceId(String processInstanceId) {
         _processInstanceId = processInstanceId;
     }
 
+    @Override
     public void setPropertiesText(String propertiesText) {
         _propertiesText = propertiesText;
     }

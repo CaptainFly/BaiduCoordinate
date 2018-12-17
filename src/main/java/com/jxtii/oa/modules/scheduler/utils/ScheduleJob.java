@@ -12,17 +12,25 @@ import org.slf4j.LoggerFactory;
 import org.springframework.scheduling.quartz.QuartzJobBean;
 
 import java.util.Date;
+import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 
 /**
- * Created by guolf on 17/4/28.
+ * 
+ * @author Fly
+ *
  */
 public class ScheduleJob extends QuartzJobBean {
+	//private ExecutorService service = Executors.newSingleThreadExecutor();
     private Logger logger = LoggerFactory.getLogger(getClass());
-    private ExecutorService service = Executors.newSingleThreadExecutor();
-
+    
+	ThreadPoolExecutor threadPool = new ThreadPoolExecutor(1, 1, 10, TimeUnit.SECONDS,
+			new ArrayBlockingQueue<Runnable>(1), new ThreadPoolExecutor.DiscardOldestPolicy());
+	private ExecutorService service = threadPool;
+	
     @Override
     protected void executeInternal(JobExecutionContext context) throws JobExecutionException {
         ScheduleJobEntity scheduleJob = (ScheduleJobEntity) context.getMergedJobDataMap()

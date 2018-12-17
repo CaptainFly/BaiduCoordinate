@@ -24,7 +24,7 @@ import java.util.Map;
  * @version 2014-05-16
  */
 @Service
-@Transactional(readOnly = true)
+@Transactional(readOnly = true,rollbackFor = Exception.class)
 public class TestAuditService extends CrudService<TestAuditDao, TestAudit> {
 
     @Autowired
@@ -34,6 +34,7 @@ public class TestAuditService extends CrudService<TestAuditDao, TestAudit> {
         return dao.getByProcInsId(procInsId);
     }
 
+    @Override
     public Page<TestAudit> findPage(Page<TestAudit> page, TestAudit testAudit) {
         testAudit.setPage(page);
         page.setList(dao.findList(testAudit));
@@ -45,7 +46,8 @@ public class TestAuditService extends CrudService<TestAuditDao, TestAudit> {
      *
      * @param testAudit
      */
-    @Transactional(readOnly = false)
+    @Override
+    @Transactional(readOnly = false,rollbackFor = Exception.class)
     public void save(TestAudit testAudit) {
 
         // 申请发起
@@ -77,7 +79,7 @@ public class TestAuditService extends CrudService<TestAuditDao, TestAudit> {
      *
      * @param testAudit
      */
-    @Transactional(readOnly = false)
+    @Transactional(readOnly = false,rollbackFor = Exception.class)
     public void auditSave(TestAudit testAudit) {
 
         // 设置意见

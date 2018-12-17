@@ -39,10 +39,12 @@ public class ActUserEntityService extends UserEntityManager {
         return systemService;
     }
 
+    @Override
     public User createNewUser(String userId) {
         return new UserEntity(userId);
     }
 
+    @Override
     public void insertUser(User user) {
 //		getDbSqlSession().insert((PersistentObject) user);
         throw new RuntimeException("not implement method.");
@@ -55,11 +57,13 @@ public class ActUserEntityService extends UserEntityManager {
         throw new RuntimeException("not implement method.");
     }
 
+    @Override
     public UserEntity findUserById(String userId) {
 //		return (UserEntity) getDbSqlSession().selectOne("selectUserById", userId);
         return ActUtils.toActivitiUser(getSystemService().getUserByLoginName(userId));
     }
 
+    @Override
     public void deleteUser(String userId) {
 //		UserEntity user = findUserById(userId);
 //		if (user != null) {
@@ -76,16 +80,19 @@ public class ActUserEntityService extends UserEntityManager {
         }
     }
 
+    @Override
     public List<User> findUserByQueryCriteria(UserQueryImpl query, Page page) {
 //		return getDbSqlSession().selectList("selectUserByQueryCriteria", query, page);
         throw new RuntimeException("not implement method.");
     }
 
+    @Override
     public long findUserCountByQueryCriteria(UserQueryImpl query) {
 //		return (Long) getDbSqlSession().selectOne("selectUserCountByQueryCriteria", query);
         throw new RuntimeException("not implement method.");
     }
 
+    @Override
     public List<Group> findGroupsByUser(String userId) {
 //		return getDbSqlSession().selectList("selectGroupsByUserId", userId);
         List<Group> list = Lists.newArrayList();
@@ -95,11 +102,13 @@ public class ActUserEntityService extends UserEntityManager {
         return list;
     }
 
+    @Override
     public UserQuery createNewUserQuery() {
 //		return new UserQueryImpl(Context.getProcessEngineConfiguration().getCommandExecutorTxRequired());
         throw new RuntimeException("not implement method.");
     }
 
+    @Override
     public IdentityInfoEntity findUserInfoByUserIdAndKey(String userId, String key) {
 //		Map<String, String> parameters = new HashMap<String, String>();
 //		parameters.put("userId", userId);
@@ -108,6 +117,7 @@ public class ActUserEntityService extends UserEntityManager {
         throw new RuntimeException("not implement method.");
     }
 
+    @Override
     public List<String> findUserInfoKeysByUserIdAndType(String userId, String type) {
 //		Map<String, String> parameters = new HashMap<String, String>();
 //		parameters.put("userId", userId);
@@ -116,6 +126,7 @@ public class ActUserEntityService extends UserEntityManager {
         throw new RuntimeException("not implement method.");
     }
 
+    @Override
     public Boolean checkPassword(String userId, String password) {
 //		User user = findUserById(userId);
 //		if ((user != null) && (password != null) && (password.equals(user.getPassword()))) {
@@ -124,7 +135,8 @@ public class ActUserEntityService extends UserEntityManager {
 //		return false;
         throw new RuntimeException("not implement method.");
     }
-
+  
+    @Override
     public List<User> findPotentialStarterUsers(String proceDefId) {
 //		Map<String, String> parameters = new HashMap<String, String>();
 //		parameters.put("procDefId", proceDefId);
@@ -133,11 +145,13 @@ public class ActUserEntityService extends UserEntityManager {
 
     }
 
+    @Override
     public List<User> findUsersByNativeQuery(Map<String, Object> parameterMap, int firstResult, int maxResults) {
 //		return getDbSqlSession().selectListWithRawParameter("selectUserByNativeQuery", parameterMap, firstResult, maxResults);
         throw new RuntimeException("not implement method.");
     }
 
+    @Override
     public long findUserCountByNativeQuery(Map<String, Object> parameterMap) {
 //		return (Long) getDbSqlSession().selectOne("selectUserCountByNativeQuery", parameterMap);
         throw new RuntimeException("not implement method.");

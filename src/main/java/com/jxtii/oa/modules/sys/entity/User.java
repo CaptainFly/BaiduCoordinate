@@ -86,6 +86,7 @@ public class User extends DataEntity<User> {
         this.loginFlag = loginFlag;
     }
 
+    @Override
     @ExcelField(title = "ID", type = 1, align = 2, sort = 1)
     public String getId() {
         return id;
@@ -102,7 +103,7 @@ public class User extends DataEntity<User> {
         this.company = company;
     }
 
-    //    @JsonIgnore
+    //@JsonIgnore
     @NotNull(message = "归属部门不能为空")
     @ExcelField(title = "归属部门", align = 2, sort = 25)
     public Office getOffice() {
@@ -124,7 +125,7 @@ public class User extends DataEntity<User> {
     }
 
     @JsonIgnore
-//    @Length(min = 6, max = 16, message = "密码长度必须为6至16个字符")
+    //@Length(min = 6, max = 16, message = "密码长度必须为6至16个字符")
     public String getPassword() {
         return password;
     }
@@ -139,7 +140,7 @@ public class User extends DataEntity<User> {
         return name;
     }
 
-    //    @ExcelField(title = "工号", align = 2, sort = 45)
+    //@ExcelField(title = "工号", align = 2, sort = 45)
     public String getNo() {
         return no;
     }
@@ -154,7 +155,7 @@ public class User extends DataEntity<User> {
 
     @Email(message = "邮箱格式不正确")
     @Length(min = 0, max = 200, message = "邮箱长度必须介于 1 和 200 之间")
-//    @ExcelField(title = "邮箱", align = 1, sort = 50)
+    //@ExcelField(title = "邮箱", align = 1, sort = 50)
     public String getEmail() {
         return email;
     }
@@ -164,7 +165,7 @@ public class User extends DataEntity<User> {
     }
 
     @Length(min = 0, max = 200, message = "电话长度必须介于 1 和 200 之间")
-//    @ExcelField(title = "电话", align = 2, sort = 60)
+//@ExcelField(title = "电话", align = 2, sort = 60)
     public String getPhone() {
         return phone;
     }
@@ -183,12 +184,13 @@ public class User extends DataEntity<User> {
         this.mobile = mobile;
     }
 
+    @Override
     @ExcelField(title = "备注", align = 1, sort = 900)
     public String getRemarks() {
         return remarks;
     }
 
-    //    @Length(min = 0, max = 100, message = "用户类型长度必须介于 1 和 100 之间")
+    /*@Length(min = 0, max = 100, message = "用户类型长度必须介于 1 和 100 之间")*/
     @ExcelField(title = "用户类型", align = 2, sort = 80, dictType = "sys_user_type")
     public String getUserType() {
         return userType;
@@ -198,11 +200,12 @@ public class User extends DataEntity<User> {
         this.userType = userType;
     }
 
+    @Override
     public Date getCreateDate() {
         return createDate;
     }
 
-    //    @ExcelField(title = "最后登录IP", type = 1, align = 1, sort = 100)
+    //@ExcelField(title = "最后登录IP", type = 1, align = 1, sort = 100)
     public String getLoginIp() {
         return loginIp;
     }
@@ -212,7 +215,7 @@ public class User extends DataEntity<User> {
     }
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-//    @ExcelField(title = "最后登录日期", type = 1, align = 1, sort = 110)
+    //@ExcelField(title = "最后登录日期", type = 1, align = 1, sort = 110)
     public Date getLoginDate() {
         return loginDate;
     }

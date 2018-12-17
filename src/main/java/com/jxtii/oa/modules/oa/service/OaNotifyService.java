@@ -22,12 +22,13 @@ import java.util.Date;
  * @version 2014-05-16
  */
 @Service
-@Transactional(readOnly = true)
+@Transactional(readOnly = true,rollbackFor = Exception.class)
 public class OaNotifyService extends CrudService<OaNotifyDao, OaNotify> {
 
     @Autowired
     private OaNotifyRecordDao oaNotifyRecordDao;
 
+    @Override
     public OaNotify get(String id) {
         OaNotify entity = dao.get(id);
         return entity;
@@ -40,7 +41,7 @@ public class OaNotifyService extends CrudService<OaNotifyDao, OaNotify> {
      * @return
      */
     public OaNotify getRecordList(OaNotify oaNotify) {
-        if (oaNotify.getType().equals("4")) {
+        if ("4".equals(oaNotify.getType())) {
             oaNotify.setOaNotifyRecordList(oaNotifyRecordDao.findScoreApproveList(new OaNotifyRecord(oaNotify)));
         } else {
             oaNotify.setOaNotifyRecordList(oaNotifyRecordDao.findList(new OaNotifyRecord(oaNotify)));
@@ -64,7 +65,8 @@ public class OaNotifyService extends CrudService<OaNotifyDao, OaNotify> {
         return dao.findCount(oaNotify);
     }
 
-    @Transactional(readOnly = false)
+    @Override
+    @Transactional(readOnly = false,rollbackFor = Exception.class)
     public void save(OaNotify oaNotify) {
         super.save(oaNotify);
 
@@ -78,7 +80,7 @@ public class OaNotifyService extends CrudService<OaNotifyDao, OaNotify> {
     /**
      * 更新阅读状态
      */
-    @Transactional(readOnly = false)
+    @Transactional(readOnly = false,rollbackFor = Exception.class)
     public void updateReadFlag(OaNotify oaNotify) {
         OaNotifyRecord oaNotifyRecord = new OaNotifyRecord(oaNotify);
         oaNotifyRecord.setUser(oaNotifyRecord.getCurrentUser());

@@ -19,11 +19,13 @@ public class ActGroupEntityServiceFactory implements SessionFactory {
     @Autowired
     private ActGroupEntityService actGroupEntityService;
 
+    @Override
     public Class<?> getSessionType() {
         // 返回原始的GroupIdentityManager类型
         return GroupIdentityManager.class;
     }
 
+    @Override
     public Session openSession() {
         // 返回自定义的GroupEntityManager实例
         return actGroupEntityService;

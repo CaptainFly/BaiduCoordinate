@@ -44,7 +44,6 @@ import java.util.List;
  * @version 2014-7-5
  */
 @Service
-//@DependsOn({"userDao","roleDao","menuDao"})
 public class SystemAuthorizingRealm extends AuthorizingRealm {
 
     private Logger logger = LoggerFactory.getLogger(getClass());
@@ -93,6 +92,7 @@ public class SystemAuthorizingRealm extends AuthorizingRealm {
     /**
      * 获取权限授权信息，如果缓存中存在，则直接从缓存中获取，否则就重新获取， 登录成功后调用
      */
+    @Override
     protected AuthorizationInfo getAuthorizationInfo(PrincipalCollection principals) {
         if (principals == null) {
             return null;
@@ -231,12 +231,24 @@ public class SystemAuthorizingRealm extends AuthorizingRealm {
 
         private static final long serialVersionUID = 1L;
 
-        private String id; // 编号
-        private String loginName; // 登录名
-        private String name; // 姓名
-        private boolean mobileLogin; // 是否手机登录
+        /**
+         * 编号
+         */
+        private String id;
+        /**
+         * 登录名
+         */
+        private String loginName;
+        /**
+         *  姓名
+         */
+        private String name;
+        /**
+         * 是否手机登录
+         */
+        private boolean mobileLogin; 
 
-//		private Map<String, Object> cacheMap;
+        //private Map<String, Object> cacheMap;
 
         public Principal(User user, boolean mobileLogin) {
             this.id = user.getId();

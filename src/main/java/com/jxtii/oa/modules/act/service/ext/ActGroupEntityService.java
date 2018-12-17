@@ -38,10 +38,12 @@ public class ActGroupEntityService extends GroupEntityManager {
         return systemService;
     }
 
+    @Override
     public Group createNewGroup(String groupId) {
         return new GroupEntity(groupId);
     }
 
+    @Override
     public void insertGroup(Group group) {
 //		getDbSqlSession().insert((PersistentObject) group);
         throw new RuntimeException("not implement method.");
@@ -54,6 +56,7 @@ public class ActGroupEntityService extends GroupEntityManager {
         throw new RuntimeException("not implement method.");
     }
 
+    @Override
     public void deleteGroup(String groupId) {
 //		GroupEntity group = getDbSqlSession().selectById(GroupEntity.class, groupId);
 //		getDbSqlSession().delete("deleteMembershipsByGroupId", groupId);
@@ -61,22 +64,26 @@ public class ActGroupEntityService extends GroupEntityManager {
         throw new RuntimeException("not implement method.");
     }
 
+    @Override
     public GroupQuery createNewGroupQuery() {
 //		return new GroupQueryImpl(Context.getProcessEngineConfiguration().getCommandExecutorTxRequired());
         throw new RuntimeException("not implement method.");
     }
 
     //	@SuppressWarnings("unchecked")
+    @Override
     public List<Group> findGroupByQueryCriteria(GroupQueryImpl query, Page page) {
 //		return getDbSqlSession().selectList("selectGroupByQueryCriteria", query, page);
         throw new RuntimeException("not implement method.");
     }
 
+    @Override
     public long findGroupCountByQueryCriteria(GroupQueryImpl query) {
 //		return (Long) getDbSqlSession().selectOne("selectGroupCountByQueryCriteria", query);
         throw new RuntimeException("not implement method.");
     }
 
+    @Override
     public List<Group> findGroupsByUser(String userId) {
 //		return getDbSqlSession().selectList("selectGroupsByUserId", userId);
         List<Group> list = Lists.newArrayList();
@@ -89,11 +96,13 @@ public class ActGroupEntityService extends GroupEntityManager {
         return list;
     }
 
+    @Override
     public List<Group> findGroupsByNativeQuery(Map<String, Object> parameterMap, int firstResult, int maxResults) {
 //		return getDbSqlSession().selectListWithRawParameter("selectGroupByNativeQuery", parameterMap, firstResult, maxResults);
         throw new RuntimeException("not implement method.");
     }
 
+    @Override
     public long findGroupCountByNativeQuery(Map<String, Object> parameterMap) {
 //		return (Long) getDbSqlSession().selectOne("selectGroupCountByNativeQuery", parameterMap);
         throw new RuntimeException("not implement method.");

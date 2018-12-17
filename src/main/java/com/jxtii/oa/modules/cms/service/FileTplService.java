@@ -11,12 +11,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * User: songlai
- * Date: 13-8-27
- * Time: 下午4:56
+ * 
+ * @author Fly
+ *
  */
 @Service
-@Transactional(readOnly = true)
+@Transactional(readOnly = true, rollbackFor = Exception.class)
 public class FileTplService {
 
     @Autowired
@@ -38,8 +38,9 @@ public class FileTplService {
             if (files != null) {
                 List<FileTpl> list = new ArrayList<FileTpl>();
                 for (File file : files) {
-                    if (file.isFile() || directory)
-                        list.add(new FileTpl(file, context.getRealPath("")));
+                    if (file.isFile() || directory) {
+                    	list.add(new FileTpl(file, context.getRealPath("")));                  	
+                    }
                 }
                 return list;
             } else {

@@ -38,6 +38,7 @@ public class FormAuthenticationFilter extends org.apache.shiro.web.filter.authc.
     private String captchaParam = DEFAULT_CAPTCHA_PARAM;
     private String messageParam = DEFAULT_MESSAGE_PARAM;
 
+    @Override
     protected AuthenticationToken createToken(ServletRequest request, ServletResponse response) {
         String username = getUsername(request);
         String password = getPassword(request);
@@ -54,6 +55,7 @@ public class FormAuthenticationFilter extends org.apache.shiro.web.filter.authc.
     /**
      * 获取登录用户名
      */
+    @Override
     protected String getUsername(ServletRequest request) {
         String username = super.getUsername(request);
         if (StringUtils.isBlank(username)) {
@@ -105,6 +107,7 @@ public class FormAuthenticationFilter extends org.apache.shiro.web.filter.authc.
     /**
      * 登录成功之后跳转URL
      */
+    @Override
     public String getSuccessUrl() {
         return super.getSuccessUrl();
     }

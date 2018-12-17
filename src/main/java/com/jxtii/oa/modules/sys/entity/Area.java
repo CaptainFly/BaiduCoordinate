@@ -31,16 +31,18 @@ public class Area extends TreeEntity<Area> {
         super(id);
     }
 
-    //	@JsonBackReference
-//	@NotNull
+    //@JsonBackReference
+    //@NotNull
+    @Override
     public Area getParent() {
         return parent;
     }
 
+    @Override
     public void setParent(Area parent) {
         this.parent = parent;
     }
-//
+
 //	@Length(min=1, max=2000)
 //	public String getParentIds() {
 //		return parentIds;

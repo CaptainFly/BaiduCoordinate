@@ -28,7 +28,8 @@ public class LeaveModifyProcessor implements TaskListener {
     @Autowired
     private RuntimeService runtimeService;
 
-    public void notify(DelegateTask delegateTask) {
+    @Override
+	public void notify(DelegateTask delegateTask) {
         String processInstanceId = delegateTask.getProcessInstanceId();
         ProcessInstance processInstance = runtimeService.createProcessInstanceQuery().processInstanceId(processInstanceId).singleResult();
         Leave leave = new Leave(processInstance.getBusinessKey());

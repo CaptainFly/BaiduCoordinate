@@ -18,9 +18,10 @@ import org.springframework.transaction.annotation.Transactional;
  * @version 2014-05-16
  */
 @Service
-@Transactional(readOnly = true)
+@Transactional(readOnly = true,rollbackFor = Exception.class)
 public class LogService extends CrudService<LogDao, Log> {
 
+	@Override
     public Page<Log> findPage(Page<Log> page, Log log) {
 
         // 设置默认时间范围，默认当前月

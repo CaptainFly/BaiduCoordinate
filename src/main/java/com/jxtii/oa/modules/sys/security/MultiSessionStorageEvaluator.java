@@ -8,11 +8,14 @@ import org.apache.shiro.web.util.WebUtils;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * Created by guolf on 17/4/18.
+ * 
+ * @author Fly
+ *
  */
 public class MultiSessionStorageEvaluator implements SessionStorageEvaluator {
     private static final Logger logger = Logger.getLogger(MultiSessionStorageEvaluator.class);
 
+    @Override
     public boolean isSessionStorageEnabled(Subject subject) {
 
         boolean enabled = false;

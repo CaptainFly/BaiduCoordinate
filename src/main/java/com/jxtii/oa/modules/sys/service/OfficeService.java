@@ -20,7 +20,7 @@ import java.util.List;
  * @version 2014-05-16
  */
 @Service
-@Transactional(readOnly = true)
+@Transactional(readOnly = true,rollbackFor = Exception.class)
 public class OfficeService extends TreeService<OfficeDao, Office> {
 
     public List<Office> findAll() {
@@ -35,7 +35,8 @@ public class OfficeService extends TreeService<OfficeDao, Office> {
         }
     }
 
-    @Transactional(readOnly = true)
+    @Override
+    @Transactional(readOnly = true,rollbackFor = Exception.class)
     public List<Office> findList(Office office) {
         if (office != null) {
             office.setParentIds(office.getParentIds() + "%");
@@ -44,13 +45,15 @@ public class OfficeService extends TreeService<OfficeDao, Office> {
         return new ArrayList<Office>();
     }
 
-    @Transactional(readOnly = false)
+    @Override
+    @Transactional(readOnly = false,rollbackFor = Exception.class)
     public void save(Office office) {
         super.save(office);
         UserUtils.removeCache(UserUtils.CACHE_OFFICE_LIST);
     }
 
-    @Transactional(readOnly = false)
+    @Override
+    @Transactional(readOnly = false,rollbackFor = Exception.class)
     public void delete(Office office) {
         super.delete(office);
         UserUtils.removeCache(UserUtils.CACHE_OFFICE_LIST);

@@ -24,15 +24,15 @@ import java.util.List;
  * @version 2013-01-15
  */
 @Service
-@Transactional(readOnly = true)
+@Transactional(readOnly = true,rollbackFor = Exception.class)
 public class LinkService extends CrudService<LinkDao, Link> {
 
-    @Transactional(readOnly = false)
+    @Transactional(readOnly = false,rollbackFor = Exception.class)
     public Page<Link> findPage(Page<Link> page, Link link, boolean isDataScopeFilter) {
         // 更新过期的权重，间隔为“6”个小时
         Date updateExpiredWeightDate = (Date) CacheUtils.get("updateExpiredWeightDateByLink");
         if (updateExpiredWeightDate == null || (updateExpiredWeightDate != null
-                && updateExpiredWeightDate.getTime() < new Date().getTime())) {
+                && updateExpiredWeightDate.getTime() < System.currentTimeMillis())) {
             dao.updateExpiredWeight(link);
             CacheUtils.put("updateExpiredWeightDateByLink", DateUtils.addHours(new Date(), 6));
         }
@@ -41,7 +41,7 @@ public class LinkService extends CrudService<LinkDao, Link> {
         return super.findPage(page, link);
     }
 
-    @Transactional(readOnly = false)
+    @Transactional(readOnly = false,rollbackFor = Exception.class)
     public void delete(Link link, Boolean isRe) {
         //dao.updateDelFlag(id, isRe!=null&&isRe?Link.DEL_FLAG_NORMAL:Link.DEL_FLAG_DELETE);
         link.setDelFlag(isRe != null && isRe ? Link.DEL_FLAG_NORMAL : Link.DEL_FLAG_DELETE);

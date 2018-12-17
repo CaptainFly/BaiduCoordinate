@@ -13,8 +13,14 @@ import org.activiti.engine.impl.pvm.process.ActivityImpl;
 
 import java.util.List;
 
+/**
+ * 
+ * @author Fly
+ *
+ */
 public class MultiInstanceActivityCreator extends RuntimeActivityCreatorSupport implements RuntimeActivityCreator {
 
+	@Override
     public ActivityImpl[] createActivities(ProcessEngine processEngine, ProcessDefinitionEntity processDefinition,
                                            RuntimeActivityDefinitionEntity info) {
         info.setFactoryName(MultiInstanceActivityCreator.class.getName());

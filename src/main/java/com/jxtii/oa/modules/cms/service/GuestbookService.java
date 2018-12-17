@@ -17,13 +17,15 @@ import org.springframework.transaction.annotation.Transactional;
  * @version 2013-01-15
  */
 @Service
-@Transactional(readOnly = true)
+@Transactional(readOnly = true,rollbackFor = Exception.class)
 public class GuestbookService extends CrudService<GuestbookDao, Guestbook> {
 
+	@Override
     public Guestbook get(String id) {
         return dao.get(id);
     }
 
+	@Override
     public Page<Guestbook> findPage(Page<Guestbook> page, Guestbook guestbook) {
 //		DetachedCriteria dc = dao.createDetachedCriteria();
 //		if (StringUtils.isNotEmpty(guestbook.getType())){
@@ -42,7 +44,7 @@ public class GuestbookService extends CrudService<GuestbookDao, Guestbook> {
         return page;
     }
 
-    @Transactional(readOnly = false)
+    @Transactional(readOnly = false,rollbackFor = Exception.class)
     public void delete(Guestbook guestbook, Boolean isRe) {
         //dao.updateDelFlag(id, isRe!=null&&isRe?Guestbook.DEL_FLAG_AUDIT:Guestbook.DEL_FLAG_DELETE);
         dao.delete(guestbook);

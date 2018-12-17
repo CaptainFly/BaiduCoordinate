@@ -17,9 +17,10 @@ import org.springframework.transaction.annotation.Transactional;
  * @version 2013-01-15
  */
 @Service
-@Transactional(readOnly = true)
+@Transactional(readOnly = true,rollbackFor = Exception.class)
 public class CommentService extends CrudService<CommentDao, Comment> {
 
+	@Override
     public Page<Comment> findPage(Page<Comment> page, Comment comment) {
 //		DetachedCriteria dc = commentDao.createDetachedCriteria();
 //		if (StringUtils.isNotBlank(comment.getContentId())){
@@ -36,7 +37,7 @@ public class CommentService extends CrudService<CommentDao, Comment> {
         return super.findPage(page, comment);
     }
 
-    @Transactional(readOnly = false)
+    @Transactional(readOnly = false,rollbackFor = Exception.class)
     public void delete(Comment entity, Boolean isRe) {
         super.delete(entity);
     }

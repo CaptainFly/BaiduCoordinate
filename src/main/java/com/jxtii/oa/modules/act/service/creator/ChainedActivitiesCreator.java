@@ -9,8 +9,14 @@ import org.springframework.util.CollectionUtils;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * 
+ * @author Fly
+ *
+ */
 public class ChainedActivitiesCreator extends RuntimeActivityCreatorSupport implements RuntimeActivityCreator {
 
+	@Override
     @SuppressWarnings("unchecked")
     public ActivityImpl[] createActivities(ProcessEngine processEngine, ProcessDefinitionEntity processDefinition,
                                            RuntimeActivityDefinitionEntity info) {

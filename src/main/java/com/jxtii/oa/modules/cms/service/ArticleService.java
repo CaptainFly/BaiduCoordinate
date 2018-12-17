@@ -33,7 +33,7 @@ import java.util.List;
  * @version 2013-05-15
  */
 @Service
-@Transactional(readOnly = true)
+@Transactional(readOnly = true,rollbackFor = Exception.class)
 public class ArticleService extends CrudService<ArticleDao, Article> {
 
     @Autowired
@@ -41,12 +41,12 @@ public class ArticleService extends CrudService<ArticleDao, Article> {
     @Autowired
     private CategoryDao categoryDao;
 
-    @Transactional(readOnly = false)
+    @Transactional(readOnly = false,rollbackFor = Exception.class)
     public Page<Article> findPage(Page<Article> page, Article article, boolean isDataScopeFilter) {
         // 更新过期的权重，间隔为“6”个小时
         Date updateExpiredWeightDate = (Date) CacheUtils.get("updateExpiredWeightDateByArticle");
         if (updateExpiredWeightDate == null || (updateExpiredWeightDate != null
-                && updateExpiredWeightDate.getTime() < new Date().getTime())) {
+                && updateExpiredWeightDate.getTime() < System.currentTimeMillis())) {
             dao.updateExpiredWeight(article);
             CacheUtils.put("updateExpiredWeightDateByArticle", DateUtils.addHours(new Date(), 6));
         }
@@ -73,7 +73,8 @@ public class ArticleService extends CrudService<ArticleDao, Article> {
 
     }
 
-    @Transactional(readOnly = false)
+    @Override
+    @Transactional(readOnly = false,rollbackFor = Exception.class)
     public void save(Article article) {
         if (article.getArticleData().getContent() != null) {
             article.getArticleData().setContent(StringEscapeUtils.unescapeHtml4(
@@ -113,7 +114,7 @@ public class ArticleService extends CrudService<ArticleDao, Article> {
         }
     }
 
-    @Transactional(readOnly = false)
+    @Transactional(readOnly = false,rollbackFor = Exception.class)
     public void delete(Article article, Boolean isRe) {
 //		dao.updateDelFlag(id, isRe!=null&&isRe?Article.DEL_FLAG_NORMAL:Article.DEL_FLAG_DELETE);
         // 使用下面方法，以便更新索引。
@@ -145,7 +146,7 @@ public class ArticleService extends CrudService<ArticleDao, Article> {
     /**
      * 点击数加一
      */
-    @Transactional(readOnly = false)
+    @Transactional(readOnly = false,rollbackFor = Exception.class)
     public void updateHitsAddOne(String id) {
         dao.updateHitsAddOne(id);
     }
@@ -159,8 +160,8 @@ public class ArticleService extends CrudService<ArticleDao, Article> {
 
     /**
      * 全文检索
+     * FIXME 暂不提供检索功能
      */
-    //FIXME 暂不提供检索功能
     public Page<Article> search(Page<Article> page, String q, String categoryId, String beginDate, String endDate) {
 
         // 设置查询条件

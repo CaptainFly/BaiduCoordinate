@@ -31,6 +31,7 @@ public class DateConverter implements Converter {
 
     private static final String MONTH_PATTERN = "yyyy-MM";
 
+    @Override
     @SuppressWarnings({"rawtypes", "unchecked"})
     public Object convert(Class type, Object value) {
         Object result = null;

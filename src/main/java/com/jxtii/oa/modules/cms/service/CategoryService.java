@@ -30,7 +30,7 @@ import java.util.Set;
  * @version 2013-5-31
  */
 @Service
-@Transactional(readOnly = true)
+@Transactional(readOnly = true,rollbackFor = Exception.class)
 public class CategoryService extends TreeService<CategoryDao, Category> {
 
     public static final String CACHE_CATEGORY_LIST = "categoryList";
@@ -129,7 +129,8 @@ public class CategoryService extends TreeService<CategoryDao, Category> {
         return page;
     }
 
-    @Transactional(readOnly = false)
+    @Override
+    @Transactional(readOnly = false,rollbackFor = Exception.class)
     public void save(Category category) {
         category.setSite(new Site(Site.getCurrentSiteId()));
         if (StringUtils.isNotBlank(category.getViewConfig())) {
@@ -140,7 +141,8 @@ public class CategoryService extends TreeService<CategoryDao, Category> {
         CmsUtils.removeCache("mainNavList_" + category.getSite().getId());
     }
 
-    @Transactional(readOnly = false)
+    @Override
+    @Transactional(readOnly = false,rollbackFor = Exception.class)
     public void delete(Category category) {
         super.delete(category);
         UserUtils.removeCache(CACHE_CATEGORY_LIST);
