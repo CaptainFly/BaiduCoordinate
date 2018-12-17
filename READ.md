@@ -20,6 +20,16 @@
 mvn clean package -Pprod
 ```
 
-## 规范编码
+## git 操作
 
+1.项目目录变成Git可以管理的仓库
+	git init
+2.文件添加到本地库
+	git add . (git add README.md 单个文件添加 )
+3.文件提交到本地库 
+	git commit -m "提交"
+4.关联远程库
+	git remote add origin git@github.com:CaptainFly/framework_demo.git
+5.把本地库的所有内容推送到远程库上
+	git push -u origin master	
 
