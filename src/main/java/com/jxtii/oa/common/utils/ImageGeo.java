@@ -7,6 +7,11 @@ import com.drew.metadata.exif.GpsDirectory;
 
 import java.io.File;
 
+/**
+ * 
+ * @author Fly
+ *
+ */
 public class ImageGeo {
     public double lat = 0.0;
     public double lon = 0.0;
@@ -36,11 +41,13 @@ public class ImageGeo {
             }
 
             double latsign = 1.0d;
-            if (northing.equalsIgnoreCase("S"))
-                latsign = -1.0d;
+            if (northing.equalsIgnoreCase("S")) {
+            	latsign = -1.0d;      	
+            }
             double lonsign = 1.0d;
-            if (easting.equalsIgnoreCase("W"))
-                lonsign = -1.0d;
+            if (easting.equalsIgnoreCase("W")) {
+            	lonsign = -1.0d;         	
+            }
             lat = (Math.abs(latpart[0].doubleValue())
                     + latpart[1].doubleValue() / 60.0d + latpart[2]
                     .doubleValue() / 3600.0d) * latsign;
@@ -48,8 +55,9 @@ public class ImageGeo {
                     + lonpart[1].doubleValue() / 60.0d + lonpart[2]
                     .doubleValue() / 3600.0d) * lonsign;
 
-            if (Double.isNaN(lat) || Double.isNaN(lon))
-                error = true;
+            if (Double.isNaN(lat) || Double.isNaN(lon)) {
+            	error = true;            	
+            }
         } catch (Exception ex) {
             error = true;
         }

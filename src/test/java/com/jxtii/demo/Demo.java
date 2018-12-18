@@ -2,10 +2,15 @@ package com.jxtii.demo;
 
 import com.jxtii.oa.common.utils.BaiduUtils;
 
+/**
+ * 
+ * @author Fly
+ *
+ */
 public class Demo {
 
 	public static void main(String[] args) {
-		BaiduDemo();
+		baiduDemo();
 
 	}
 	
@@ -13,7 +18,7 @@ public class Demo {
 	/**
 	 * 百度经纬度测试
 	 */
-	public static void BaiduDemo() {
+	public static void baiduDemo() {
 		String dom = "云南省大理白族自治州大理市玉洱路131号 ";
         String coordinate = BaiduUtils.getCoordinate(dom);
         System.out.println("'" + dom + "'的经纬度为：" + coordinate);

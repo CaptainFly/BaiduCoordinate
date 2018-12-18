@@ -15,7 +15,7 @@ import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 /**
- * Created by guolf on 17/4/17.
+ * @author Fly
  * swagger配置
  * API文档路径:http://ip:port/swagger-ui.html
  */

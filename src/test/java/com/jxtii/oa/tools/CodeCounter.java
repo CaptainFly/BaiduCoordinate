@@ -26,7 +26,8 @@ public class CodeCounter {
 
 		ArrayList<File> al = getFile(new File(path));
 		for (File f : al) {
-			if (f.getName().matches(".*\\.java$")){ // 匹配java格式的文件
+			// 匹配java格式的文件
+			if (f.getName().matches(".*\\.java$")){
 				count(f);
 				System.out.println(f);
 			}
@@ -54,8 +55,9 @@ public class CodeCounter {
 			for (File child : ff) {
 				if (child.isDirectory()) {
 					getFile(child);
-				} else
-					fileArray.add(child);
+				} else {
+					fileArray.add(child);				
+				}
 			}
 		}
 		return fileArray;
@@ -73,8 +75,10 @@ public class CodeCounter {
 			br = new BufferedReader(new FileReader(f));
 			String line = "";
 			while ((line = br.readLine()) != null) {
-				line = line.trim(); // 除去注释前的空格
-				if (line.matches("^[ ]*$")) { // 匹配空行
+				// 除去注释前的空格
+				line = line.trim();
+				// 匹配空行
+				if (line.matches("^[ ]*$")) { 
 					blankLines++;
 				} else if (line.startsWith("//")) {
 					commentLines++;

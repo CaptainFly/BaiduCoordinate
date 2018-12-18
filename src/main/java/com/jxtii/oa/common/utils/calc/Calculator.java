@@ -3,8 +3,9 @@ package com.jxtii.oa.common.utils.calc;
 import java.util.Collections;
 import java.util.Stack;
 
+
 /**
- * Created by guolf on 17/6/26.
+ * @author Fly
  * 算数表达式求值
  * 直接调用Calculator的类方法conversion()
  * 传入算数表达式，将返回一个浮点值结果
@@ -12,9 +13,18 @@ import java.util.Stack;
  * Calculator.conversion("(20-5)*0.2")
  */
 public class Calculator {
-    private Stack<String> postfixStack = new Stack<String>();// 后缀式栈
-    private Stack<Character> opStack = new Stack<Character>();// 运算符栈
-    private int[] operatPriority = new int[]{0, 3, 2, 1, -1, 1, 0, 2};// 运用运算符ASCII码-40做索引的运算符优先级
+	/**
+	 * 后缀式栈
+	 */
+    private Stack<String> postfixStack = new Stack<String>();
+    /**
+     * 运算符栈
+     */
+    private Stack<Character> opStack = new Stack<Character>();
+    /**
+     * 运用运算符ASCII码-40做索引的运算符优先级
+     */
+    private int[] operatPriority = new int[]{0, 3, 2, 1, -1, 1, 0, 2};
 
     public static double conversion(String expression) {
         double result = 0;
@@ -65,14 +75,18 @@ public class Calculator {
     public double calculate(String expression) {
         Stack<String> resultStack = new Stack<String>();
         prepare(expression);
-        Collections.reverse(postfixStack);// 将后缀式栈反转
-        String firstValue, secondValue, currentValue;// 参与计算的第一个值，第二个值和算术运算符
+        // 将后缀式栈反转
+        Collections.reverse(postfixStack);
+        // 参与计算的第一个值，第二个值和算术运算符
+        String firstValue, secondValue, currentValue;
         while (!postfixStack.isEmpty()) {
             currentValue = postfixStack.pop();
-            if (!isOperator(currentValue.charAt(0))) {// 如果不是运算符则存入操作数栈中
+            // 如果不是运算符则存入操作数栈中
+            if (!isOperator(currentValue.charAt(0))) {
                 currentValue = currentValue.replace("~", "-");
                 resultStack.push(currentValue);
-            } else {// 如果是运算符则从操作数栈中取两个值和该数值一起参与运算
+            } else {
+            	// 如果是运算符则从操作数栈中取两个值和该数值一起参与运算
                 secondValue = resultStack.pop();
                 firstValue = resultStack.pop();
 
@@ -93,19 +107,26 @@ public class Calculator {
      * @param expression
      */
     private void prepare(String expression) {
-        opStack.push(',');// 运算符放入栈底元素逗号，此符号优先级最低
+    	// 运算符放入栈底元素逗号，此符号优先级最低
+        opStack.push(',');
         char[] arr = expression.toCharArray();
-        int currentIndex = 0;// 当前字符的位置
-        int count = 0;// 上次算术运算符到本次算术运算符的字符的长度便于或者之间的数值
-        char currentOp, peekOp;// 当前操作符和栈顶操作符
+        // 当前字符的位置
+        int currentIndex = 0;
+        // 上次算术运算符到本次算术运算符的字符的长度便于或者之间的数值
+        int count = 0;
+        // 当前操作符和栈顶操作符
+        char currentOp, peekOp;
         for (int i = 0; i < arr.length; i++) {
             currentOp = arr[i];
-            if (isOperator(currentOp)) {// 如果当前字符是运算符
+            if (isOperator(currentOp)) {
+            	// 如果当前字符是运算符
                 if (count > 0) {
-                    postfixStack.push(new String(arr, currentIndex, count));// 取两个运算符之间的数字
+                	// 取两个运算符之间的数字
+                    postfixStack.push(new String(arr, currentIndex, count));
                 }
                 peekOp = opStack.peek();
-                if (currentOp == ')') {// 遇到反括号则将运算符栈中的元素移除到后缀式栈中直到遇到左括号
+                // 遇到反括号则将运算符栈中的元素移除到后缀式栈中直到遇到左括号
+                if (currentOp == ')') {
                     while (opStack.peek() != '(') {
                         postfixStack.push(String.valueOf(opStack.pop()));
                     }
@@ -123,12 +144,14 @@ public class Calculator {
                 count++;
             }
         }
-        if (count > 1 || (count == 1 && !isOperator(arr[currentIndex]))) {// 最后一个字符不是括号或者其他运算符的则加入后缀式栈中
+        // 最后一个字符不是括号或者其他运算符的则加入后缀式栈中
+        if (count > 1 || (count == 1 && !isOperator(arr[currentIndex]))) {
             postfixStack.push(new String(arr, currentIndex, count));
         }
 
         while (opStack.peek() != ',') {
-            postfixStack.push(String.valueOf(opStack.pop()));// 将操作符栈中的剩余的元素添加到后缀式栈中
+        	// 将操作符栈中的剩余的元素添加到后缀式栈中
+            postfixStack.push(String.valueOf(opStack.pop()));
         }
     }
 
@@ -149,7 +172,8 @@ public class Calculator {
      * @param peek
      * @return
      */
-    public boolean compare(char cur, char peek) {// 如果是peek优先级高于cur，返回true，默认都是peek优先级要低
+    public boolean compare(char cur, char peek) {
+    	//如果是peek优先级高于cur，返回true，默认都是peek优先级要低
         boolean result = false;
         if (operatPriority[(peek) - 40] >= operatPriority[(cur) - 40]) {
             result = true;
@@ -180,6 +204,7 @@ public class Calculator {
             case '/':
                 result = String.valueOf(ArithHelper.div(firstValue, secondValue));
                 break;
+            default:
         }
         return result;
     }

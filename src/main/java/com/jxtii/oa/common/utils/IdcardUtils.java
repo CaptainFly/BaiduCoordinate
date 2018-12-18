@@ -155,8 +155,9 @@ public class IdcardUtils extends StringUtils {
                 e.printStackTrace();
             }
             Calendar cal = Calendar.getInstance();
-            if (birthDate != null)
-                cal.setTime(birthDate);
+            if (birthDate != null) {
+            	cal.setTime(birthDate);            	
+            }
             // 获取出生年(完全表现形式,如：2010)
             String sYear = String.valueOf(cal.get(Calendar.YEAR));
             idCard18 = idCard.substring(0, 6) + sYear + idCard.substring(8);
@@ -192,7 +193,7 @@ public class IdcardUtils extends StringUtils {
         }
         String[] cardval = validateIdCard10(card);
         if (cardval != null) {
-            if (cardval[2].equals("true")) {
+            if ("true".equals(cardval[2])) {
                 return true;
             }
         }
@@ -254,8 +255,9 @@ public class IdcardUtils extends StringUtils {
                 e.printStackTrace();
             }
             Calendar cal = Calendar.getInstance();
-            if (birthDate != null)
-                cal.setTime(birthDate);
+            if (birthDate != null) {
+            	cal.setTime(birthDate);           	
+            }
             if (!valiDate(cal.get(Calendar.YEAR),
                     Integer.valueOf(birthCode.substring(2, 4)),
                     Integer.valueOf(birthCode.substring(4, 6)))) {
@@ -287,10 +289,10 @@ public class IdcardUtils extends StringUtils {
             info[0] = "台湾";
             System.out.println("11111");
             String char2 = idCard.substring(1, 2);
-            if (char2.equals("1")) {
+            if ("1".equals(char2)) {
                 info[1] = "M";
                 System.out.println("MMMMMMM");
-            } else if (char2.equals("2")) {
+            } else if ("2".equals(char2)) {
                 info[1] = "F";
                 System.out.println("FFFFFFF");
             } else {
@@ -370,7 +372,7 @@ public class IdcardUtils extends StringUtils {
             sum = sum + Integer.valueOf(c + "") * iflag;
             iflag--;
         }
-        if (end.toUpperCase().equals("A")) {
+        if ("A".equals(end.toUpperCase())) {
             sum = sum + 10;
         } else {
             sum = sum + Integer.valueOf(end);
@@ -459,6 +461,7 @@ public class IdcardUtils extends StringUtils {
             case 0:
                 sCode = "1";
                 break;
+            default:
         }
         return sCode;
     }

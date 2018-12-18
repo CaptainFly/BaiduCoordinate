@@ -39,9 +39,9 @@ public class BaiduUtils {
                 JSONObject obj = JSONObject.fromObject(json);
                 if ("0".equals(obj.getString("status"))) {
                     //经度
-                	double lng = obj.getJSONObject("result").getJSONObject("location").getDouble("lng"); // 经度
+                	double lng = obj.getJSONObject("result").getJSONObject("location").getDouble("lng");
                     //纬度
-                	double lat = obj.getJSONObject("result").getJSONObject("location").getDouble("lat"); // 纬度
+                	double lat = obj.getJSONObject("result").getJSONObject("location").getDouble("lat");
                     //格式处理
                 	DecimalFormat df = new DecimalFormat("#.######");
                     return df.format(lng) + "," + df.format(lat);
@@ -70,8 +70,8 @@ public class BaiduUtils {
     		System.out.println(obj.toString());
     		if ("0".equals(obj.getString("status"))) {
     			//格式化地址
-    			String formatted_address = obj.getJSONObject("result").getString("formatted_address");
-    			return formatted_address;
+    			String formattedAddress = obj.getJSONObject("result").getString("formatted_address");
+    			return formattedAddress;
     		}
     	}
     	

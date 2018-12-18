@@ -219,7 +219,8 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
         temp_result = temp_result.replaceAll("<([a-zA-Z]+)[^<>]*>(.*?)</\\1>",
                 "$2");
         // 用正则表达式取出标记
-        Pattern p = Pattern.compile("<([a-zA-Z]+)[^<>]*>");
+        String regular = "<([a-zA-Z]+)[^<>]*>";
+        Pattern p = Pattern.compile(regular);
         Matcher m = p.matcher(temp_result);
         List<String> endHTML = Lists.newArrayList();
         while (m.find()) {

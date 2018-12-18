@@ -3,7 +3,9 @@ package com.jxtii.oa.test;
 import com.jxtii.oa.common.utils.calc.Calculator;
 
 /**
- * Created by guolf on 17/6/26.
+ * 
+ * @author Fly
+ *
  */
 public class CalcTest {
 
