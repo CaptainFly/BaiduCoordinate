@@ -1,6 +1,3 @@
-/**
- * Copyright &copy; 2012-2016 <a href="http://www.jxtii.com/">江西电信信息产业有限公司</a> All rights reserved.
- */
 package com.jxtii.oa.common.utils.excel.annotation;
 
 import java.lang.annotation.ElementType;
@@ -11,8 +8,8 @@ import java.lang.annotation.Target;
 /**
  * Excel注解定义
  *
- * @author ThinkGem
- * @version 2013-03-10
+ * @author Fly
+ * @version 2018-12-01
  */
 @Target({ElementType.METHOD, ElementType.FIELD, ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
@@ -57,4 +54,14 @@ public @interface ExcelField {
      * 字段归属组（根据分组导出导入）
      */
     int[] groups() default {};
+    
+    /**
+	 * 导出字段所属sheet页（0：sheet1；1：sheet2...）
+	 */
+	int sheetIndx() default 0;
+	
+	/**
+	 * 必填校验（0：非必填；1：必填）
+	 */
+	int validate() default 0;
 }

@@ -16,6 +16,7 @@ import com.jxtii.oa.common.web.BaseController;
 import com.jxtii.oa.modules.sys.entity.Office;
 import com.jxtii.oa.modules.sys.entity.Role;
 import com.jxtii.oa.modules.sys.entity.User;
+import com.jxtii.oa.modules.sys.model.UserModel;
 import com.jxtii.oa.modules.sys.service.SystemService;
 import com.jxtii.oa.modules.sys.utils.UserUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -259,6 +260,34 @@ public class UserController extends BaseController {
         }
         return "redirect:" + adminPath + "/sys/user/list?repage";
     }
+    
+    
+    /**
+     * 导入用户数据模板
+     * @param response
+     * @param redirectAttributes
+     * @return
+     */
+    @RequiresPermissions("sys:user:view")
+    @RequestMapping(value = "excel/template")
+    public String template(HttpServletResponse response, RedirectAttributes redirectAttributes) {
+        try {
+            String fileName = "用户数据导入模板.xlsx";           
+            String title = "注：\n红色字段为必填项";
+    		List<UserModel> list = Lists.newArrayList();
+    		List<String> sheetName = Lists.newArrayList();
+    		sheetName.add("用户信息1");
+    		sheetName.add("用户信息2");
+            
+            ExportExcel exportExcel = new ExportExcel(title, UserModel.class, 2, 2, sheetName);
+            exportExcel.setInitList(list).write(response, fileName).dispose();
+            return null;
+        } catch (Exception e) {
+            addMessage(redirectAttributes, "导入模板下载失败！失败信息：" + e.getMessage());
+        }
+        return "redirect:" + adminPath + "/sys/user/list?repage";
+    }
+    
 
     /**
      * 验证登录名是否有效

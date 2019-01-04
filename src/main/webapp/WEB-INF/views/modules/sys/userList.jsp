@@ -38,6 +38,7 @@
         <input id="uploadFile" name="file" type="file" style="width:330px"/><br/><br/>　　
         <input id="btnImportSubmit" class="btn btn-primary" type="submit" value="   导    入   "/>
         <a href="${ctx}/sys/user/import/template">下载模板</a>
+        <a href="${ctx}/sys/user/excel/template">多表模板</a>
     </form>
 </div>
 <ul class="nav nav-tabs">

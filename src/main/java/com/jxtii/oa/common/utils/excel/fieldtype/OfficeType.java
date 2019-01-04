@@ -3,18 +3,39 @@
  */
 package com.jxtii.oa.common.utils.excel.fieldtype;
 
+import java.util.List;
+
+import com.jxtii.oa.common.utils.SpringContextHolder;
 import com.jxtii.oa.common.utils.StringUtils;
 import com.jxtii.oa.modules.sys.entity.Office;
+import com.jxtii.oa.modules.sys.service.OfficeService;
 import com.jxtii.oa.modules.sys.utils.UserUtils;
 
 /**
+ * 机构
  * 字段类型转换
- *
- * @author ThinkGem
- * @version 2013-03-10
+ * @author Fly
+ * @version 2018-12-01
  */
 public class OfficeType {
+	
+	
+	private static OfficeService officeService = SpringContextHolder.getBean(OfficeService.class);
+	
 
+	
+	/**
+	 * 数据获取（模板）
+	 * @param val
+	 * @return
+	 */
+	public static List<Office> getDataList() {
+		List <Office> office = officeService.findList(true);
+		return office;
+	}
+	
+	
+	
     /**
      * 获取对象值（导入）
      */
